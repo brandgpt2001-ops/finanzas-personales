@@ -1,0 +1,33 @@
+# ---- Datos personales: NUNCA deben subirse a git ----
+# Todo lo de data/ (base de datos real, respaldos) se excluye, salvo
+# .gitkeep, que existe solo para que la carpeta se preserve en el repo.
+data/*
+!data/.gitkeep
+
+# Por si algún respaldo o exportación termina fuera de data/ por error
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# PDFs exportados del presupuesto (contienen montos e ingresos reales)
+presupuesto_*.pdf
+*.pdf
+
+# ---- Python / entorno ----
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.python-version
+
+# ---- Editores ----
+.vscode/
+.idea/
+
+# ---- Sistema operativo ----
+.DS_Store
+Thumbs.db
