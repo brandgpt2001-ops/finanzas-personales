@@ -223,7 +223,7 @@ wheels = [
 
 [[package]]
 name = "finanzas-app"
-version = "0.1.0"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "flet" },
@@ -242,7 +242,7 @@ requires-dist = [
     { name = "flet", specifier = ">=0.24.0" },
     { name = "matplotlib", specifier = ">=3.9.0" },
     { name = "pandas", specifier = ">=2.2.0" },
-    { name = "reportlab", specifier = ">=5.0.0" },
+    { name = "reportlab", specifier = ">=4.0.0" },
 ]
 
 [package.metadata.requires-dev]

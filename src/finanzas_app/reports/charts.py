@@ -59,7 +59,7 @@ def category_distribution_donut(df: pd.DataFrame, palette: Palette, title: str =
     if df.empty:
         return None
 
-    fig, ax = plt.subplots(figsize=(4.2, 4.2))
+    fig, ax = plt.subplots(figsize=(6.5, 6.5))
     fig.patch.set_alpha(0)
 
     colors = [CATEGORY_COLORS[i % len(CATEGORY_COLORS)] for i in range(len(df))]

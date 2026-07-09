@@ -31,3 +31,9 @@ venv/
 # ---- Sistema operativo ----
 .DS_Store
 Thumbs.db
+
+# Visual Studio interno
+.vs/
+
+# Ejecutable compilado
+build/

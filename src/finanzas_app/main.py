@@ -16,6 +16,7 @@ tendencia siguen pendientes.
 from __future__ import annotations
 
 import asyncio
+import sys
 import time
 from datetime import date
 from pathlib import Path
@@ -31,7 +32,31 @@ from finanzas_app.reports import charts, pdf_export
 from finanzas_app.services import budget, categorization, trends
 from finanzas_app.views import login, theme
 
-DB_PATH = Path(__file__).resolve().parents[2] / "data" / "finanzas.db"
+def _get_db_path() -> Path:
+    """Devuelve la ruta correcta de la base de datos según el contexto.
+
+    - En desarrollo (uv run flet run): usa data/finanzas.db relativo a la
+      raíz del proyecto, igual que antes.
+    - En el .exe empaquetado (flet build): usa una carpeta 'data/' junto
+      al ejecutable, para que los datos persistan entre versiones y el
+      archivo sea fácil de encontrar/respaldar.
+    """
+    # ft.app_data_dir() devuelve la carpeta junto al .exe cuando se corre
+    # como ejecutable empaquetado, y None en desarrollo.
+    import os
+    if getattr(sys, "frozen", False):
+        # Corriendo como .exe empaquetado
+        exe_dir = Path(sys.executable).parent
+        db_dir = exe_dir / "data"
+    else:
+        # Corriendo en desarrollo
+        db_dir = Path(__file__).resolve().parents[2] / "data"
+
+    db_dir.mkdir(parents=True, exist_ok=True)
+    return db_dir / "finanzas.db"
+
+
+DB_PATH = _get_db_path()
 
 MONTH_NAMES = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -477,7 +502,7 @@ def build_main_app(page: ft.Page, conn, on_logout) -> None:
         cat_agg = categorization.totals_by_category(variable_df)
         donut_b64 = charts.category_distribution_donut(cat_agg, palette)
         if donut_b64:
-            donut_container.content = ft.Image(src=charts.to_data_uri(donut_b64), width=320, height=320)
+            donut_container.content = ft.Image(src=charts.to_data_uri(donut_b64), width=500, height=500)
             top = cat_agg.iloc[0]
             donut_caption.value = (
                 f"{top['category']} es tu mayor gasto variable este mes "
